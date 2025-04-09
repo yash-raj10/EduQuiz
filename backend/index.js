@@ -55,7 +55,7 @@ const privateKey = process.env.privateKey;
 const web3 = new Web3(
   new Web3.providers.HttpProvider("https://testnet.hashio.io/api")
 );
-const wallet = web3.eth.accounts.wallet.add(process.env.privateKey);
+const wallet = web3.eth.accounts.wallet.add(process.env.PRIVATE_KEY);
 
 const abi = [
   {
@@ -157,15 +157,12 @@ function makeid(length) {
 }
 
 async function deployContract() {
-  const provider = new JsonRpcProvider("https://testnet.hashio.io/api");
-
+  const provider = new JsonRpcProvider("https://rpc.open-campus-codex.gelato.digital");
   const wallet = new ethers.Wallet(privateKey, provider);
-
   const factory = new ethers.ContractFactory(abi, bytecode, wallet);
 
   try {
     const Quizcontract = await factory.deploy();
-    // await Quizcontract.deployed();
     console.log("Contract deployed to:", Quizcontract.target);
     return Quizcontract.target;
   } catch (error) {

@@ -86,33 +86,38 @@ export default function Home() {
         description: quizDescription,
       }),
     };
-    console.log(options);
 
-    fetch("https://small-egg-quick.functions.on-fleek.app/", options)
-      .then((response) => response.json())
-      .then((response) => {
-        console.log(response);
-        // if the answer  string is not in the options, then set the answer string to empty
-        if (!response.options.includes(response.answer)) {
-          response.answer = "";
-        }
+    try {
+      const response = await fetch("https://small-egg-quick.functions.on-fleek.app/", options);
+      if (!response.ok) {
+        throw new Error(`HTTP error! status: ${response.status}`);
+      }
+      const data = await response.json();
+      
+      // Make sure we have valid data before updating state
+      if (data && data.question && data.options) {
+        // Convert explanation from string to array if it's not already
+        const explanationArray = Array.isArray(data.explanation) 
+          ? data.explanation 
+          : [data.explanation];
 
         setQuestions([
           ...questions,
           {
-            question: response.question,
-            answer: response.answer,
-            options: response.options,
-            explanation: response.explanation,
+            question: data.question,
+            answer: data.options.includes(data.answer) ? data.answer : "",
+            options: data.options,
+            explanation: explanationArray,
           },
         ]);
-        setLoadingAI(false);
-      })
-      .catch((err) => {
-        console.error(err);
-        setLoadingAI(false);
-      });
-    // console.log(questions);
+      } else {
+        console.error("Invalid response format:", data);
+      }
+    } catch (err) {
+      console.error("Error fetching AI questions:", err);
+    } finally {
+      setLoadingAI(false);
+    }
   }
 
   return (
