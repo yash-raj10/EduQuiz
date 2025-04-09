@@ -1,0 +1,41 @@
+{
+  "_format": "hh-sol-cache-2",
+  "files": {
+    "/Users/yashraj/Documents/Code/EduQuiz/QuizVerse/backend/contracts/QuizLeaderboard.sol": {
+      "lastModificationDate": 1744180717739,
+      "contentHash": "159a1188719e78c30e3fb3830a2ec1ba",
+      "sourceName": "contracts/QuizLeaderboard.sol",
+      "solcConfig": {
+        "version": "0.8.23",
+        "settings": {
+          "evmVersion": "paris",
+          "optimizer": {
+            "enabled": false,
+            "runs": 200
+          },
+          "outputSelection": {
+            "*": {
+              "*": [
+                "abi",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers",
+                "metadata"
+              ],
+              "": [
+                "ast"
+              ]
+            }
+          }
+        }
+      },
+      "imports": [],
+      "versionPragmas": [
+        "^0.8.0"
+      ],
+      "artifacts": [
+        "QuizLeaderboard"
+      ]
+    }
+  }
+}
